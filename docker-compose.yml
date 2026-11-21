@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: kaiju
+      POSTGRES_PASSWORD: kaiju
+      POSTGRES_DB: kaiju
+    ports:
+      - "5433:5432"
+    volumes:
+      - kaiju_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kaiju -d kaiju"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  kaiju_pg:

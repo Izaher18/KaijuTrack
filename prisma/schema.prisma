@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum CreatureType {
+  GODZILLA
+  DRAGON
+}
+
+/// One row per calendar day of goal progress.
+model DailyLog {
+  id                String   @id @default(cuid())
+  date              DateTime @unique @db.Date
+  leetcodeDone      Boolean  @default(false)
+  systemDesignDone  Boolean  @default(false)
+  applicationsCount Int      @default(0)
+  projectDone       Boolean  @default(false)
+  projectNote       String?
+  projectMinutes    Int?
+  xpEarned          Int      @default(0)
+  perfectDay        Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+/// Singleton creature that grows from total XP across all days.
+model Creature {
+  id        String       @id @default(cuid())
+  type      CreatureType @default(GODZILLA)
+  name      String       @default("Kaiju")
+  totalXp   Int          @default(0)
+  stage     Int          @default(0)
+  updatedAt DateTime     @updatedAt
+}

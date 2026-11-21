@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #060b14;
+  --panel: #0d1524;
+  --panel-strong: #121c2e;
+  --fog: #e8eef7;
+  --muted: #8b9bb3;
+  --accent: #c8ff3d;
+  --accent-dim: #7adf1a;
+  --background: var(--ink);
+  --foreground: var(--fog);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), Georgia, serif;
+  min-height: 100vh;
+}
+
+.skyline-bg {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(200, 255, 61, 0.12), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(56, 120, 180, 0.15), transparent 50%),
+    linear-gradient(180deg, #071018 0%, #0a1220 45%, #060b14 100%);
+  overflow: hidden;
+}
+
+.skyline-bg::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 42%;
+  background:
+    linear-gradient(90deg, transparent 0%, rgba(200, 255, 61, 0.04) 40%, transparent 70%),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 18px,
+      rgba(8, 16, 28, 0.95) 18px 34px,
+      rgba(14, 24, 40, 0.9) 34px 52px,
+      rgba(10, 18, 32, 0.95) 52px 70px
+    );
+  mask-image: linear-gradient(to top, black 20%, transparent 100%);
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.skyline-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
+  opacity: 0.04;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+@keyframes kaiju-idle {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-0.4deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(0.4deg);
+  }
+}
+
+@keyframes xp-shimmer {
+  0% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.25);
+  }
+  100% {
+    filter: brightness(1);
+  }
+}
+
+@keyframes stage-burst {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.4;
+  }
+  60% {
+    transform: scale(1.04);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.godzilla-idle {
+  animation: kaiju-idle 4.5s ease-in-out infinite;
+}
+
+.godzilla-stage {
+  animation: stage-burst 0.7s ease-out;
+}
+
+.xp-fill {
+  animation: xp-shimmer 2.8s ease-in-out infinite;
+  transition: width 0.5s ease;
+}
