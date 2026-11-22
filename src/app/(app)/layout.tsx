@@ -17,27 +17,27 @@ export default async function AppLayout({
 
   return (
     <div className="relative flex flex-1 flex-col">
-      <div className="skyline-bg absolute inset-0 -z-10" aria-hidden />
-      <header className="border-b border-white/5 bg-[var(--ink)]/70 backdrop-blur-md">
+      <div className="page-wash absolute inset-0 -z-10" aria-hidden />
+      <header className="border-b border-[var(--line)] bg-white/80 backdrop-blur-md">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
           <Link
             href="/dashboard"
-            className="font-[family-name:var(--font-display)] text-xl tracking-wide text-[var(--fog)]"
+            className="font-[family-name:var(--font-display)] text-lg font-semibold tracking-tight text-[var(--ink)]"
           >
             Kaiju
           </Link>
           <nav className="flex items-center gap-5 text-sm text-[var(--muted)]">
-            <Link className="hover:text-[var(--fog)]" href="/dashboard">
+            <Link className="hover:text-[var(--ink)]" href="/dashboard">
               Today
             </Link>
-            <Link className="hover:text-[var(--fog)]" href="/history">
+            <Link className="hover:text-[var(--ink)]" href="/history">
               History
             </Link>
-            <Link className="hover:text-[var(--fog)]" href="/settings">
+            <Link className="hover:text-[var(--ink)]" href="/settings">
               Settings
             </Link>
             <form action={signOut}>
-              <button type="submit" className="hover:text-[var(--fog)]">
+              <button type="submit" className="hover:text-[var(--ink)]">
                 Sign out
               </button>
             </form>

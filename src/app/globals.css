@@ -1,15 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --ink: #060b14;
-  --panel: #0d1524;
-  --panel-strong: #121c2e;
-  --fog: #e8eef7;
-  --muted: #8b9bb3;
-  --accent: #c8ff3d;
-  --accent-dim: #7adf1a;
-  --background: var(--ink);
-  --foreground: var(--fog);
+  --ink: #111827;
+  --fog: #111827;
+  --muted: #6b7280;
+  --line: #e5e7eb;
+  --panel: #ffffff;
+  --panel-strong: #f3f4f6;
+  --accent: #0f766e;
+  --accent-soft: #ccfbf1;
+  --accent-dim: #14b8a6;
+  --background: #fafafa;
+  --foreground: #111827;
 }
 
 @theme inline {
@@ -22,93 +24,105 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-body), Georgia, serif;
+  font-family: var(--font-body), "Segoe UI", sans-serif;
   min-height: 100vh;
 }
 
-.skyline-bg {
+.page-wash {
   background:
-    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(200, 255, 61, 0.12), transparent 55%),
-    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(56, 120, 180, 0.15), transparent 50%),
-    linear-gradient(180deg, #071018 0%, #0a1220 45%, #060b14 100%);
-  overflow: hidden;
-}
-
-.skyline-bg::before {
-  content: "";
-  position: absolute;
-  inset: auto 0 0 0;
-  height: 42%;
-  background:
-    linear-gradient(90deg, transparent 0%, rgba(200, 255, 61, 0.04) 40%, transparent 70%),
-    repeating-linear-gradient(
-      90deg,
-      transparent 0 18px,
-      rgba(8, 16, 28, 0.95) 18px 34px,
-      rgba(14, 24, 40, 0.9) 34px 52px,
-      rgba(10, 18, 32, 0.95) 52px 70px
-    );
-  mask-image: linear-gradient(to top, black 20%, transparent 100%);
-  opacity: 0.85;
-  pointer-events: none;
-}
-
-.skyline-bg::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
-  opacity: 0.04;
-  pointer-events: none;
-  mix-blend-mode: overlay;
+    radial-gradient(ellipse 90% 55% at 80% -10%, rgba(20, 184, 166, 0.12), transparent 55%),
+    radial-gradient(ellipse 70% 40% at 0% 100%, rgba(17, 24, 39, 0.04), transparent 50%),
+    linear-gradient(180deg, #ffffff 0%, #fafafa 45%, #f4f5f7 100%);
 }
 
 @keyframes kaiju-idle {
   0%,
   100% {
-    transform: translateY(0) rotate(-0.4deg);
+    transform: translateY(0);
   }
   50% {
-    transform: translateY(-6px) rotate(0.4deg);
+    transform: translateY(-5px);
   }
 }
 
-@keyframes xp-shimmer {
-  0% {
-    filter: brightness(1);
+@keyframes kaiju-breathe {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scaleX(1);
   }
   50% {
-    filter: brightness(1.25);
-  }
-  100% {
-    filter: brightness(1);
+    opacity: 0.55;
+    transform: scaleX(1.04);
   }
 }
 
-@keyframes stage-burst {
-  0% {
-    transform: scale(0.92);
-    opacity: 0.4;
+@keyframes xp-grow {
+  from {
+    transform: scaleX(0.96);
   }
-  60% {
-    transform: scale(1.04);
-    opacity: 1;
+  to {
+    transform: scaleX(1);
   }
-  100% {
-    transform: scale(1);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
 .godzilla-idle {
-  animation: kaiju-idle 4.5s ease-in-out infinite;
+  animation: kaiju-idle 4.8s ease-in-out infinite;
 }
 
 .godzilla-stage {
-  animation: stage-burst 0.7s ease-out;
+  animation: fade-up 0.55s ease-out;
+}
+
+.kaiju-shadow {
+  animation: kaiju-breathe 4.8s ease-in-out infinite;
+  transform-origin: center;
 }
 
 .xp-fill {
-  animation: xp-shimmer 2.8s ease-in-out infinite;
-  transition: width 0.5s ease;
+  transform-origin: left center;
+  animation: xp-grow 0.6s ease-out;
+  transition: width 0.45s ease;
+}
+
+.surface {
+  background: color-mix(in srgb, white 88%, transparent);
+  border: 1px solid var(--line);
+}
+
+.input-field {
+  border: 1px solid var(--line);
+  background: white;
+  color: var(--ink);
+  outline: none;
+}
+
+.input-field:focus {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.btn-primary {
+  background: var(--ink);
+  color: white;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.btn-primary:hover {
+  background: #1f2937;
+}
+
+.btn-primary:disabled {
+  opacity: 0.55;
 }

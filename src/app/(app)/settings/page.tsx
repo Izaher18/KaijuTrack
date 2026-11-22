@@ -8,10 +8,10 @@ export default async function SettingsPage() {
 
   return (
     <div>
-      <p className="text-xs uppercase tracking-[0.25em] text-[var(--accent)]">
+      <p className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--accent)]">
         Preferences
       </p>
-      <h1 className="mt-2 font-[family-name:var(--font-display)] text-4xl text-[var(--fog)]">
+      <h1 className="mt-2 font-[family-name:var(--font-display)] text-4xl font-semibold tracking-tight text-[var(--ink)]">
         Settings
       </h1>
       <p className="mt-2 max-w-xl text-sm text-[var(--muted)]">

@@ -12,12 +12,12 @@ export default async function LoginPage() {
 
   return (
     <div className="relative flex flex-1 items-center justify-center px-6 py-16">
-      <div className="skyline-bg absolute inset-0 -z-10" aria-hidden />
-      <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[var(--panel)]/80 p-8 backdrop-blur-md">
-        <p className="text-xs uppercase tracking-[0.25em] text-[var(--accent)]">
+      <div className="page-wash absolute inset-0 -z-10" aria-hidden />
+      <div className="surface w-full max-w-md rounded-3xl p-8 shadow-sm">
+        <p className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--accent)]">
           Sign in
         </p>
-        <h1 className="mt-2 font-[family-name:var(--font-display)] text-4xl text-[var(--fog)]">
+        <h1 className="mt-2 font-[family-name:var(--font-display)] text-4xl font-semibold tracking-tight text-[var(--ink)]">
           Kaiju
         </h1>
         <p className="mt-2 text-sm text-[var(--muted)]">
@@ -25,7 +25,7 @@ export default async function LoginPage() {
         </p>
         <LoginForm />
         <p className="mt-6 text-center text-sm text-[var(--muted)]">
-          <Link href="/" className="hover:text-[var(--fog)]">
+          <Link href="/" className="hover:text-[var(--ink)]">
             ← Back
           </Link>
         </p>

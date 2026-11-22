@@ -15,9 +15,29 @@ from egg to apex. Perfect days stack a streak.
 
 ## Local setup
 
+### Option A — Homebrew Postgres (no Docker)
+
 ```bash
+brew install postgresql@16
+brew services start postgresql@16
+export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
+createuser -s kaiju
+psql postgres -c "ALTER ROLE kaiju WITH LOGIN PASSWORD 'kaiju';"
+createdb -O kaiju kaiju
+
 cp .env.example .env
 # set APP_PASSWORD and SESSION_SECRET (openssl rand -hex 32)
+npm install
+npx prisma migrate dev
+npx prisma db seed
+npm run dev
+```
+
+### Option B — Docker
+
+```bash
+cp .env.example .env
+# use the Docker DATABASE_URL (port 5433) from .env.example
 docker compose up -d
 npm install
 npx prisma migrate dev
@@ -27,9 +47,6 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000). Sign in at `/login` with
 `APP_PASSWORD`.
-
-Postgres is mapped to host port **5433** so it does not collide with other
-local databases.
 
 ## Daily XP
 

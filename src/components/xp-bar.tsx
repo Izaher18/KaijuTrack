@@ -8,10 +8,10 @@ export function XpBar({ totalXp }: { totalXp: number }) {
     <div className="w-full">
       <div className="mb-2 flex items-end justify-between gap-3">
         <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-[var(--muted)]">
+          <p className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--muted)]">
             Stage
           </p>
-          <p className="font-[family-name:var(--font-display)] text-xl text-[var(--fog)]">
+          <p className="font-[family-name:var(--font-display)] text-xl font-semibold tracking-tight text-[var(--ink)]">
             {current.name}
           </p>
         </div>
@@ -21,9 +21,9 @@ export function XpBar({ totalXp }: { totalXp: number }) {
             : `${totalXp} XP · Max stage`}
         </p>
       </div>
-      <div className="h-3 overflow-hidden rounded-full bg-[var(--panel-strong)] ring-1 ring-white/5">
+      <div className="h-2 overflow-hidden rounded-full bg-[var(--panel-strong)]">
         <div
-          className="xp-fill h-full rounded-full bg-gradient-to-r from-[var(--accent-dim)] to-[var(--accent)]"
+          className="xp-fill h-full rounded-full bg-[var(--accent)]"
           style={{ width: `${Math.round(progress * 100)}%` }}
         />
       </div>

@@ -13,7 +13,7 @@ export function LoginForm() {
       <div>
         <label
           htmlFor="password"
-          className="block text-sm font-medium text-[var(--fog)]"
+          className="block text-sm font-medium text-[var(--ink)]"
         >
           Password
         </label>
@@ -23,13 +23,13 @@ export function LoginForm() {
           type="password"
           autoComplete="current-password"
           required
-          className="mt-2 w-full rounded-xl border border-white/10 bg-[var(--panel-strong)] px-3 py-2.5 text-sm text-[var(--fog)] outline-none placeholder:text-[var(--muted)] focus:border-[var(--accent)]/50"
+          className="input-field mt-2 w-full rounded-xl px-3 py-2.5 text-sm placeholder:text-[var(--muted)]"
           placeholder="••••••••"
         />
       </div>
 
       {state.error ? (
-        <p role="alert" className="text-sm text-rose-400">
+        <p role="alert" className="text-sm text-rose-600">
           {state.error}
         </p>
       ) : null}
@@ -37,9 +37,9 @@ export function LoginForm() {
       <button
         type="submit"
         disabled={pending}
-        className="w-full rounded-xl bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-[#0b1408] transition hover:brightness-110 disabled:opacity-60"
+        className="btn-primary w-full rounded-full px-4 py-2.5 text-sm font-semibold disabled:opacity-60"
       >
-        {pending ? "Signing in…" : "Enter the lair"}
+        {pending ? "Signing in…" : "Continue"}
       </button>
     </form>
   );

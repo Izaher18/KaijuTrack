@@ -43,7 +43,6 @@ export function GoalTracker({ initial }: GoalTrackerProps) {
 
   useEffect(() => {
     if (state.ok) {
-      // Soft refresh so creature XP/stage updates without a full remount flash.
       window.setTimeout(() => {
         window.location.reload();
       }, 250);
@@ -51,7 +50,7 @@ export function GoalTracker({ initial }: GoalTrackerProps) {
   }, [state.ok]);
 
   return (
-    <form action={formAction} className="space-y-5">
+    <form action={formAction} className="space-y-4">
       <input type="hidden" name="leetcodeDone" value={leetcodeDone ? "1" : "0"} />
       <input
         type="hidden"
@@ -73,17 +72,17 @@ export function GoalTracker({ initial }: GoalTrackerProps) {
         onChange={setSystemDesignDone}
       />
 
-      <div className="rounded-xl border border-white/5 bg-[var(--panel)]/70 p-4">
+      <div className="surface rounded-2xl p-4">
         <div className="flex items-center justify-between gap-3">
           <div>
-            <p className="font-medium text-[var(--fog)]">Job applications</p>
+            <p className="font-medium text-[var(--ink)]">Job applications</p>
             <p className="text-sm text-[var(--muted)]">
               Target {XP.applicationCap} · +{XP.application} XP each
             </p>
           </div>
-          <p className="font-[family-name:var(--font-display)] text-2xl text-[var(--accent)]">
+          <p className="font-[family-name:var(--font-display)] text-2xl font-semibold text-[var(--ink)]">
             {applicationsCount}
-            <span className="text-base text-[var(--muted)]">
+            <span className="text-base font-medium text-[var(--muted)]">
               /{XP.applicationCap}
             </span>
           </p>
@@ -91,10 +90,8 @@ export function GoalTracker({ initial }: GoalTrackerProps) {
         <div className="mt-3 flex items-center gap-2">
           <button
             type="button"
-            className="rounded-lg border border-white/10 px-3 py-1.5 text-sm text-[var(--fog)] hover:border-[var(--accent)]/40"
-            onClick={() =>
-              setApplicationsCount((n) => Math.max(0, n - 1))
-            }
+            className="rounded-lg border border-[var(--line)] bg-white px-3 py-1.5 text-sm text-[var(--ink)] hover:bg-[var(--panel-strong)]"
+            onClick={() => setApplicationsCount((n) => Math.max(0, n - 1))}
           >
             −
           </button>
@@ -107,11 +104,11 @@ export function GoalTracker({ initial }: GoalTrackerProps) {
             onChange={(e) =>
               setApplicationsCount(Math.max(0, Number(e.target.value) || 0))
             }
-            className="w-full rounded-lg border border-white/10 bg-[var(--panel-strong)] px-3 py-2 text-sm text-[var(--fog)] outline-none focus:border-[var(--accent)]/50"
+            className="input-field w-full rounded-lg px-3 py-2 text-sm"
           />
           <button
             type="button"
-            className="rounded-lg border border-white/10 px-3 py-1.5 text-sm text-[var(--fog)] hover:border-[var(--accent)]/40"
+            className="rounded-lg border border-[var(--line)] bg-white px-3 py-1.5 text-sm text-[var(--ink)] hover:bg-[var(--panel-strong)]"
             onClick={() => setApplicationsCount((n) => n + 1)}
           >
             +
@@ -119,7 +116,7 @@ export function GoalTracker({ initial }: GoalTrackerProps) {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/5 bg-[var(--panel)]/70 p-4">
+      <div className="surface rounded-2xl p-4">
         <GoalToggle
           label="GitHub project work"
           detail={`+${XP.project} XP`}
@@ -134,7 +131,7 @@ export function GoalTracker({ initial }: GoalTrackerProps) {
             value={projectNote}
             onChange={(e) => setProjectNote(e.target.value)}
             placeholder="What did you ship?"
-            className="rounded-lg border border-white/10 bg-[var(--panel-strong)] px-3 py-2 text-sm text-[var(--fog)] outline-none placeholder:text-[var(--muted)] focus:border-[var(--accent)]/50"
+            className="input-field rounded-lg px-3 py-2 text-sm placeholder:text-[var(--muted)]"
           />
           <input
             name="projectMinutes"
@@ -143,13 +140,13 @@ export function GoalTracker({ initial }: GoalTrackerProps) {
             value={projectMinutes}
             onChange={(e) => setProjectMinutes(e.target.value)}
             placeholder="Minutes"
-            className="rounded-lg border border-white/10 bg-[var(--panel-strong)] px-3 py-2 text-sm text-[var(--fog)] outline-none placeholder:text-[var(--muted)] focus:border-[var(--accent)]/50"
+            className="input-field rounded-lg px-3 py-2 text-sm placeholder:text-[var(--muted)]"
           />
         </div>
       </div>
 
       {state.error ? (
-        <p role="alert" className="text-sm text-rose-400">
+        <p role="alert" className="text-sm text-rose-600">
           {state.error}
         </p>
       ) : null}
@@ -161,7 +158,7 @@ export function GoalTracker({ initial }: GoalTrackerProps) {
       <button
         type="submit"
         disabled={pending}
-        className="w-full rounded-xl bg-[var(--accent)] px-4 py-3 text-sm font-semibold text-[#0b1408] transition hover:brightness-110 disabled:opacity-60"
+        className="btn-primary w-full rounded-full px-4 py-3 text-sm font-semibold disabled:opacity-60"
       >
         {pending ? "Saving…" : "Save today’s progress"}
       </button>
@@ -188,9 +185,9 @@ function GoalToggle({
   bare?: boolean;
 }) {
   const inner = (
-    <label className="flex cursor-pointer items-center justify-between gap-3">
+    <div className="flex items-center justify-between gap-3">
       <span>
-        <span className="block font-medium text-[var(--fog)]">{label}</span>
+        <span className="block font-medium text-[var(--ink)]">{label}</span>
         <span className="block text-sm text-[var(--muted)]">{detail}</span>
       </span>
       <button
@@ -203,19 +200,15 @@ function GoalToggle({
         }`}
       >
         <span
-          className={`absolute top-0.5 left-0.5 h-6 w-6 rounded-full bg-white transition ${
+          className={`absolute top-0.5 left-0.5 h-6 w-6 rounded-full bg-white shadow-sm transition ${
             checked ? "translate-x-5" : ""
           }`}
         />
       </button>
-    </label>
+    </div>
   );
 
   if (bare) return inner;
 
-  return (
-    <div className="rounded-xl border border-white/5 bg-[var(--panel)]/70 p-4">
-      {inner}
-    </div>
-  );
+  return <div className="surface rounded-2xl p-4">{inner}</div>;
 }

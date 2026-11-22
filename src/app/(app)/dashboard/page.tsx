@@ -1,5 +1,5 @@
 import { connection } from "next/server";
-import { DragonStub, Godzilla } from "@/components/godzilla";
+import { Dragon, Godzilla } from "@/components/godzilla";
 import { GoalTracker } from "@/components/goal-tracker";
 import { XpBar } from "@/components/xp-bar";
 import { syncCreatureXp } from "@/lib/creature";
@@ -18,14 +18,14 @@ export default async function DashboardPage() {
   const stageName = stageMeta(creature.stage).name;
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
-      <section className="rounded-3xl border border-white/5 bg-[var(--panel)]/55 p-6 backdrop-blur-sm sm:p-8">
+    <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-start lg:gap-16">
+      <section>
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <p className="text-xs uppercase tracking-[0.25em] text-[var(--accent)]">
+            <p className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--accent)]">
               Companion
             </p>
-            <h1 className="mt-2 font-[family-name:var(--font-display)] text-3xl text-[var(--fog)] sm:text-4xl">
+            <h1 className="mt-2 font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight text-[var(--ink)] sm:text-4xl">
               {creature.name}
             </h1>
             <p className="mt-1 text-sm text-[var(--muted)]">
@@ -33,37 +33,37 @@ export default async function DashboardPage() {
               {stageName}
             </p>
           </div>
-          <div className="rounded-2xl border border-white/5 bg-[var(--panel-strong)]/80 px-4 py-3 text-center">
-            <p className="text-xs uppercase tracking-[0.2em] text-[var(--muted)]">
+          <div className="text-right">
+            <p className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--muted)]">
               Streak
             </p>
-            <p className="font-[family-name:var(--font-display)] text-3xl text-[var(--accent)]">
+            <p className="font-[family-name:var(--font-display)] text-3xl font-semibold text-[var(--ink)]">
               {streak}
             </p>
           </div>
         </div>
 
-        <div className="mt-6 flex justify-center">
+        <div className="mt-8 flex justify-center">
           {creature.type === "GODZILLA" ? (
             <Godzilla stage={creature.stage} name={creature.name} />
           ) : (
-            <DragonStub name={creature.name} />
+            <Dragon stage={creature.stage} name={creature.name} />
           )}
         </div>
 
-        <div className="mt-6">
+        <div className="mt-8">
           <XpBar totalXp={creature.totalXp} />
         </div>
       </section>
 
-      <section className="rounded-3xl border border-white/5 bg-[var(--panel)]/55 p-6 backdrop-blur-sm sm:p-8">
-        <p className="text-xs uppercase tracking-[0.25em] text-[var(--accent)]">
+      <section>
+        <p className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--accent)]">
           Today
         </p>
-        <h2 className="mt-2 font-[family-name:var(--font-display)] text-3xl text-[var(--fog)]">
+        <h2 className="mt-2 font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight text-[var(--ink)]">
           Daily grind
         </h2>
-        <p className="mt-1 mb-6 text-sm text-[var(--muted)]">
+        <p className="mt-1 mb-8 text-sm text-[var(--muted)]">
           Log progress. Your kaiju feeds on consistency.
         </p>
         <GoalTracker
