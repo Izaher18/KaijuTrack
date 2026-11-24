@@ -8,15 +8,25 @@ export default async function HistoryPage() {
 
   return (
     <div className="mx-auto max-w-3xl">
-      <p className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--accent)]">
-        Archive
-      </p>
-      <h1 className="mt-2 font-[family-name:var(--font-display)] text-4xl font-semibold tracking-tight text-[var(--ink)]">
-        History
-      </h1>
-      <p className="mt-2 text-sm text-[var(--muted)]">
-        Recent days of grind. Perfect days keep the streak alive.
-      </p>
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--accent)]">
+            Archive
+          </p>
+          <h1 className="mt-2 font-[family-name:var(--font-display)] text-4xl font-semibold tracking-tight text-[var(--ink)]">
+            History
+          </h1>
+          <p className="mt-2 text-sm text-[var(--muted)]">
+            Recent days of grind. Perfect days keep the streak alive.
+          </p>
+        </div>
+        <a
+          href="/api/export/csv"
+          className="rounded-full border border-[var(--line)] bg-white px-4 py-2 text-sm font-medium text-[var(--ink)] transition hover:border-[var(--ink)]/20"
+        >
+          Export CSV
+        </a>
+      </div>
 
       {logs.length === 0 ? (
         <p className="mt-10 border border-dashed border-[var(--line)] p-8 text-center text-[var(--muted)]">
