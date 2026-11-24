@@ -23,6 +23,9 @@ feedback loop when you nail a perfect day.
 - Perfect-day celebration + stage-up flash
 - 16-week activity heatmap
 - Weekly stats (completion %, apps, XP, perfect days)
+- Milestone badges (streaks, apps, Apex)
+- Yesterday nudge when the previous day was incomplete
+- CSV export of full history
 - History archive of past days
 - Creature name + type in Settings
 
@@ -40,11 +43,13 @@ feedback loop when you nail a perfect day.
 Browser
   └─ /login  → HMAC cookie session
   └─ /dashboard
+        ├─ Yesterday nudge (if prior day incomplete)
         ├─ Creature (Godzilla | Dragon) + XP bar + streak
         ├─ Today’s goals (Server Action → DailyLog upsert)
-        ├─ Heatmap (last ~16 weeks)
-        └─ Weekly stats
-  └─ /history · /settings
+        ├─ Heatmap + weekly stats
+        └─ Milestone badges
+  └─ /history (CSV export) · /settings
+  └─ GET /api/export/csv
 ```
 
 `DailyLog` is one row per calendar day. `Creature` is a singleton whose
@@ -113,3 +118,8 @@ npm run build
 Set `DATABASE_URL`, `APP_PASSWORD`, and `SESSION_SECRET` in your host (e.g.
 Vercel). Run migrations against the production database before the first
 deploy. `vercel.json` marks the project as Next.js.
+
+## License & contributing
+
+MIT — see [LICENSE](LICENSE). Local setup and PR checks are in
+[CONTRIBUTING.md](CONTRIBUTING.md).
