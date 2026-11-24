@@ -2,24 +2,33 @@ import { connection } from "next/server";
 import { Dragon, Godzilla } from "@/components/godzilla";
 import { GoalTracker } from "@/components/goal-tracker";
 import { Heatmap } from "@/components/heatmap";
+import { Milestones } from "@/components/milestones";
 import { WeeklyStats } from "@/components/weekly-stats";
 import { XpBar } from "@/components/xp-bar";
 import { syncCreatureXp } from "@/lib/creature";
-import { getCurrentStreak, getTodayLog } from "@/lib/logs";
+import { getCurrentStreak, getTodayLog, listAllLogs } from "@/lib/logs";
+import { evaluateMilestones } from "@/lib/milestones";
 import { getDashboardStats } from "@/lib/stats";
 import { stageMeta } from "@/lib/xp";
 
 export default async function DashboardPage() {
   await connection();
 
-  const [creature, today, streak, stats] = await Promise.all([
+  const [creature, today, streak, stats, logs] = await Promise.all([
     syncCreatureXp(),
     getTodayLog(),
     getCurrentStreak(),
     getDashboardStats(),
+    listAllLogs(),
   ]);
 
   const stageName = stageMeta(creature.stage).name;
+  const milestones = evaluateMilestones({
+    logs,
+    streak,
+    stage: creature.stage,
+    totalXp: creature.totalXp,
+  });
 
   return (
     <div className="space-y-12">
@@ -89,6 +98,10 @@ export default async function DashboardPage() {
       <section className="grid gap-10 border-t border-[var(--line)] pt-10 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
         <Heatmap cells={stats.heatmap} />
         <WeeklyStats stats={stats.weekly} />
+      </section>
+
+      <section className="border-t border-[var(--line)] pt-10">
+        <Milestones milestones={milestones} />
       </section>
     </div>
   );
