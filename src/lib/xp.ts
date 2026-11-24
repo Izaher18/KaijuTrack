@@ -11,7 +11,7 @@ export const STAGE_THRESHOLDS = [
   { stage: 0, name: "Egg", xp: 0 },
   { stage: 1, name: "Hatchling", xp: 100 },
   { stage: 2, name: "Juvenile", xp: 300 },
-  { stage: 3, name: "City Stomper", xp: 700 },
+  { stage: 3, name: "Titan", xp: 700 },
   { stage: 4, name: "Apex", xp: 1500 },
 ] as const;
 

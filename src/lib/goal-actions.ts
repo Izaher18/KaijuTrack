@@ -3,9 +3,17 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { endSession, hasSession } from "@/lib/auth";
-import { upsertTodayLog } from "@/lib/logs";
+import { ensureCreature, syncCreatureXp } from "@/lib/creature";
+import { getTodayLog, upsertTodayLog } from "@/lib/logs";
+import { stageMeta } from "@/lib/xp";
 
-export type GoalActionState = { error: string | null; ok: boolean };
+export type GoalActionState = {
+  error: string | null;
+  ok: boolean;
+  celebratePerfect?: boolean;
+  celebrateStageUp?: boolean;
+  stageName?: string;
+};
 
 export async function signOut(): Promise<void> {
   await endSession();
@@ -39,7 +47,12 @@ export async function updateTodayGoals(
     return { error: "Minutes must be a non-negative number.", ok: false };
   }
 
-  await upsertTodayLog({
+  const [beforeLog, beforeCreature] = await Promise.all([
+    getTodayLog(),
+    ensureCreature(),
+  ]);
+
+  const log = await upsertTodayLog({
     leetcodeDone,
     systemDesignDone,
     applicationsCount: Math.floor(applicationsCount),
@@ -49,7 +62,16 @@ export async function updateTodayGoals(
       projectMinutes === null ? null : Math.floor(projectMinutes),
   });
 
+  const afterCreature = await syncCreatureXp();
+
   revalidatePath("/dashboard");
   revalidatePath("/history");
-  return { error: null, ok: true };
+
+  return {
+    error: null,
+    ok: true,
+    celebratePerfect: log.perfectDay && !beforeLog?.perfectDay,
+    celebrateStageUp: afterCreature.stage > beforeCreature.stage,
+    stageName: stageMeta(afterCreature.stage).name,
+  };
 }

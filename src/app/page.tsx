@@ -59,8 +59,8 @@ export default async function HomePage() {
           </h2>
           <p className="mt-3 text-[var(--muted)]">
             LeetCode, system design, twenty applications, and a push on your
-            GitHub project. Perfect days stack streaks. XP grows Godzilla from
-            egg to apex.
+            GitHub project. Perfect days stack streaks. XP grows your companion
+            from egg to apex.
           </p>
         </div>
       </section>

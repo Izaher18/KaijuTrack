@@ -1,17 +1,55 @@
 # Kaiju
 
-Daily career-goal tracker with a Godzilla that grows as you grind.
+[![CI](https://github.com/Izaher18/KaijuTrack/actions/workflows/ci.yml/badge.svg)](https://github.com/Izaher18/KaijuTrack/actions/workflows/ci.yml)
 
-Log one LeetCode problem, one system design session, at least 20 job
-applications, and work on a GitHub project each day. XP feeds your companion
-from egg to apex. Perfect days stack a streak.
+Personal daily grind tracker with a companion that grows as you do.
+
+Log **one LeetCode**, **one system design**, **20+ job applications**, and
+**GitHub project work** each day. XP feeds Godzilla or Dragon from egg to apex.
+Perfect days stack streaks. A heatmap and weekly stats show whether you’re
+actually consistent.
+
+## Why this exists
+
+Job search + interview prep is a streak game. Kaiju turns four daily habits into
+visible progress: a creature that levels up, a calendar of effort, and a short
+feedback loop when you nail a perfect day.
+
+## Features
+
+- Shared-password login (HMAC session cookie)
+- Daily checklist with live XP
+- Godzilla **and** Dragon art with stage-based growth
+- Perfect-day celebration + stage-up flash
+- 16-week activity heatmap
+- Weekly stats (completion %, apps, XP, perfect days)
+- History archive of past days
+- Creature name + type in Settings
 
 ## Stack
 
-- Next.js (App Router) + React + TypeScript
-- Tailwind CSS v4
-- Postgres via Prisma
-- Shared-password session auth (HMAC cookie)
+- **Next.js** (App Router) + **React** + **TypeScript**
+- **Tailwind CSS v4**
+- **Postgres** via **Prisma**
+- Server Actions for auth and goal updates
+- GitHub Actions CI (lint, typecheck, tests, build)
+
+## Architecture
+
+```
+Browser
+  └─ /login  → HMAC cookie session
+  └─ /dashboard
+        ├─ Creature (Godzilla | Dragon) + XP bar + streak
+        ├─ Today’s goals (Server Action → DailyLog upsert)
+        ├─ Heatmap (last ~16 weeks)
+        └─ Weekly stats
+  └─ /history · /settings
+```
+
+`DailyLog` is one row per calendar day. `Creature` is a singleton whose
+`totalXp` / `stage` are recomputed from all logs. Auth is env-password only so
+the schema stays ready for multi-user later without forcing accounts now.
 
 ## Local setup
 
@@ -58,9 +96,20 @@ Open [http://localhost:3000](http://localhost:3000). Sign in at `/login` with
 | Project work done | 30 |
 | Perfect day (all four) | +50 |
 
-Stages: Egg (0) → Hatchling (100) → Juvenile (300) → City Stomper (700) → Apex (1500).
+Stages: Egg (0) → Hatchling (100) → Juvenile (300) → Titan (700) → Apex (1500).
 
-## Creature types
+## Scripts
 
-Godzilla is fully illustrated. Dragon is selectable in Settings as a stub for a
-later art pass; XP and stages already apply to both.
+```bash
+npm run dev
+npm run lint
+npm run typecheck
+npm test
+npm run build
+```
+
+## Deploy notes
+
+Set `DATABASE_URL`, `APP_PASSWORD`, and `SESSION_SECRET` in your host (e.g.
+Vercel). Run migrations against the production database before the first
+deploy. `vercel.json` marks the project as Next.js.
