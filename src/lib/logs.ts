@@ -59,6 +59,12 @@ export async function listRecentLogs(limit = 30): Promise<DailyLog[]> {
   });
 }
 
+export async function listAllLogs(): Promise<DailyLog[]> {
+  return prisma.dailyLog.findMany({
+    orderBy: { date: "asc" },
+  });
+}
+
 export async function getCurrentStreak(): Promise<number> {
   const perfectLogs = await prisma.dailyLog.findMany({
     where: { perfectDay: true },
