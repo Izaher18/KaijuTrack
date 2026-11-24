@@ -4,10 +4,12 @@ import { GoalTracker } from "@/components/goal-tracker";
 import { Heatmap } from "@/components/heatmap";
 import { Milestones } from "@/components/milestones";
 import { WeeklyStats } from "@/components/weekly-stats";
+import { YesterdayNudgeBanner } from "@/components/yesterday-nudge";
 import { XpBar } from "@/components/xp-bar";
 import { syncCreatureXp } from "@/lib/creature";
 import { getCurrentStreak, getTodayLog, listAllLogs } from "@/lib/logs";
 import { evaluateMilestones } from "@/lib/milestones";
+import { getYesterdayNudge } from "@/lib/nudge";
 import { getDashboardStats } from "@/lib/stats";
 import { stageMeta } from "@/lib/xp";
 
@@ -29,9 +31,12 @@ export default async function DashboardPage() {
     stage: creature.stage,
     totalXp: creature.totalXp,
   });
+  const yesterdayNudge = getYesterdayNudge(logs);
 
   return (
     <div className="space-y-12">
+      <YesterdayNudgeBanner nudge={yesterdayNudge} />
+
       <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-start lg:gap-16">
         <section>
           <div className="flex flex-wrap items-start justify-between gap-4">
